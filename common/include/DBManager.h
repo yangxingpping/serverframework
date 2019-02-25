@@ -12,7 +12,9 @@ public:
 	DBManager(std::string sqluser="root", std::string sqlpass="123456", std::string odbc="_odbcmysql", std::string redisip="127.0.0.1", uint16_t redisport=6379);
 	virtual ~DBManager();
 	void startDBManager();
+	void procPullThread();
 
+	void procPullMessage(std::shared_ptr<std::string> msg);
 
 private:
 	otl_connect* _dbConnection=nullptr;
