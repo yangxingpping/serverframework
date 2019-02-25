@@ -67,3 +67,7 @@ connector/connector
 dbManager/dbManager
 /logicServer/CMakeFiles/
 logicServer/logicServer
+
+*/*.ilk
+*/*.pdb
+*/*.exp
