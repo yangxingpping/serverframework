@@ -154,6 +154,7 @@
     <ClCompile Include="..\common\src\SessionManager.cpp" />
     <ClCompile Include="..\common\src\Utils.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NngRelateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\include\comm_def.h" />
@@ -162,12 +163,14 @@
     <ClInclude Include="..\common\include\DBManager.h" />
     <ClInclude Include="..\common\include\DumpManager.h" />
     <ClInclude Include="..\common\include\JsonStructs.h" />
+    <ClInclude Include="..\common\include\MacroDB.h" />
     <ClInclude Include="..\common\include\MessageQueueManager.h" />
     <ClInclude Include="..\common\include\ProcManagerInterface.h" />
     <ClInclude Include="..\common\include\SessionManager.h" />
     <ClInclude Include="..\common\include\Utils.h" />
     <ClInclude Include="..\common\include\WebBaseInterface.h" />
     <ClInclude Include="..\common\include\WebManagerPair.h" />
+    <ClInclude Include="NngRelateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

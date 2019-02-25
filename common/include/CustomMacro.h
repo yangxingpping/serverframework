@@ -1,6 +1,9 @@
 #pragma once
 
+#include "spdlog/spdlog.h"
+#include "comm_def.h"
 
+#include <string>
 
 #define C_LOGGER spdlog::get(LOGGER_NAME)
 
@@ -20,4 +23,20 @@
 	catch(...)\
 	{\
 		C_LOGGER->error("parse json with undefined error"); \
+	}
+
+
+#define BEGIN_DB_ACCESS try \
+	{
+
+#define END_DB_ACCESS }\
+	catch(otl_exception& e)\
+	{\
+		std::string strerr{"执行sql:" + strsql + ":发生异常:" + e.msg};\
+		C_LOGGER->warn(strerr);\
+	}\
+	catch(...)\
+	{\
+		std::string strerr{"执行sql:" + strsql + ":发生异常:" + e.msg};\
+		C_LOGGER->warn(strerr);\
 	}
