@@ -68,6 +68,8 @@ dbManager/dbManager
 /logicServer/CMakeFiles/
 logicServer/logicServer
 
+/*/x64/
+
 */*.ilk
 */*.pdb
 */*.exp

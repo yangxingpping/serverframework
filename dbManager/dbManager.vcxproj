@@ -148,7 +148,18 @@
   <ItemGroup>
     <ClCompile Include="..\common\src\DBManager.cpp" />
     <ClCompile Include="..\common\src\DumpManager.cpp" />
+    <ClCompile Include="..\common\src\SessionManager.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\include\comm_def.h" />
+    <ClInclude Include="..\common\include\CustomForwardDeclare.h" />
+    <ClInclude Include="..\common\include\CustomMacro.h" />
+    <ClInclude Include="..\common\include\DBManager.h" />
+    <ClInclude Include="..\common\include\DumpManager.h" />
+    <ClInclude Include="..\common\include\JsonStructs.h" />
+    <ClInclude Include="..\common\include\SessionManager.h" />
+    <ClInclude Include="..\common\include\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
