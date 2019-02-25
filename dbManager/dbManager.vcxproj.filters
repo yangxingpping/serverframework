@@ -27,6 +27,15 @@
     <ClCompile Include="..\common\src\SessionManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\include\WebManagerPair.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\MessageQueueManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\Utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\include\comm_def.h">
@@ -51,6 +60,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\common\include\Utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\WebBaseInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\WebManagerPair.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\MessageQueueManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\ProcManagerInterface.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

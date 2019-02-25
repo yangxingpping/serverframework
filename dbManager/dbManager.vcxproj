@@ -100,9 +100,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;GLOG_NO_ABBREVIATED_SEVERITIES;C_WINDOWS;NEWUWEBSCKETS;LIBUS_USE_LIBUV;WSSERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../common/include;../common/include/include/uSockets/src;../common/include/newuwebsockets/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common/include;../common/include/uSockets/src;../common/include/newuwebsockets/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -146,9 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\include\WebManagerPair.cpp" />
     <ClCompile Include="..\common\src\DBManager.cpp" />
     <ClCompile Include="..\common\src\DumpManager.cpp" />
+    <ClCompile Include="..\common\src\MessageQueueManager.cpp" />
     <ClCompile Include="..\common\src\SessionManager.cpp" />
+    <ClCompile Include="..\common\src\Utils.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,8 +162,12 @@
     <ClInclude Include="..\common\include\DBManager.h" />
     <ClInclude Include="..\common\include\DumpManager.h" />
     <ClInclude Include="..\common\include\JsonStructs.h" />
+    <ClInclude Include="..\common\include\MessageQueueManager.h" />
+    <ClInclude Include="..\common\include\ProcManagerInterface.h" />
     <ClInclude Include="..\common\include\SessionManager.h" />
     <ClInclude Include="..\common\include\Utils.h" />
+    <ClInclude Include="..\common\include\WebBaseInterface.h" />
+    <ClInclude Include="..\common\include\WebManagerPair.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
