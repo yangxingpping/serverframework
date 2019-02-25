@@ -30,3 +30,30 @@
 *.exe
 *.out
 *.app
+
+# log files
+*.log
+
+# dump files
+*.dmp
+
+# makefile
+Makefile
+CMakeCache.txt
+cmake_install.cmake
+
+ccserver/query.pb.cc
+ccserver/query.pb.h
+
+/.vs/
+/x64/
+/ccserver/x64/
+/ccserver/.vscode/
+/.vscode/
+/ccserver/CMakeFiles/
+/enc_temp_folder/
+/ccserver/*.pdb
+/ccserver/*.ilk
+/ccserver/*.exp
+
+/ccserver/build/
