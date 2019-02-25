@@ -57,3 +57,13 @@ ccserver/query.pb.h
 /ccserver/*.exp
 
 /ccserver/build/
+/CMakeFiles/
+/authServer/CMakeFiles/
+authServer/authServer
+/build/
+/connector/CMakeFiles/
+connector/connector
+/dbManager/CMakeFiles/
+dbManager/dbManager
+/logicServer/CMakeFiles/
+logicServer/logicServer
