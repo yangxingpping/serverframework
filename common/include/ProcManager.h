@@ -16,7 +16,7 @@ class ProcManager : public std::enable_shared_from_this<ProcManager>, public Pro
 public:
 	ProcManager();
 	virtual ~ProcManager();
-	void InitProcManager(WebBaseInterface* pGateWay, unsigned int cpuTCount = 4);
+	virtual void InitProcManager(WebBaseInterface* pGateWay, unsigned int cpuTCount = 4) override;
 
 	void StartProcManager();
 	

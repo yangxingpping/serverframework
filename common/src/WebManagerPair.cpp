@@ -138,8 +138,10 @@ bool WebManagerPair::InitHttpsManagerPair(std::string ip, uint16_t port, std::sh
 	{
 		bret = true;
 	}
+	_sDefaultHttpPair = this;
 	_sDefaultHttpsPair = this;
-	
+	_sDefaultWsPair = this;
+	_sDefaultWssPair = this;
 	return bret;
 }
 
@@ -155,7 +157,10 @@ bool WebManagerPair::InitWsManagerPair(std::string ip, uint16_t port, std::share
 	{
 		bret = true;
 	}
+	_sDefaultHttpPair = this;
+	_sDefaultHttpsPair = this;
 	_sDefaultWsPair = this;
+	_sDefaultWssPair = this;
 	return bret;
 }
 
@@ -171,6 +176,9 @@ bool WebManagerPair::InitWssManagerPair(std::string ip, uint16_t port, std::shar
 	{
 		bret = true;
 	}
+	_sDefaultHttpPair = this;
+	_sDefaultHttpsPair = this;
+	_sDefaultWsPair = this;
 	_sDefaultWssPair = this;
 	return bret;
 }
