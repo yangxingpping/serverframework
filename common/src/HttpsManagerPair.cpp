@@ -31,7 +31,7 @@ HttpsManagerPair* HttpsManagerPair::_sDefaultHttpsPair = nullptr;
 
 void HttpsManagerPair::NotifyClientResponse()
 {
-	_wssLoop->defer([this]() {
+	_httpsLoop->defer([this]() {
 		_sDefaultHttpsPair->SendClientResponse();
 		});
 }
@@ -42,7 +42,7 @@ void HttpsManagerPair::PushClientResponse(ResponseType type, SessionType sid, co
 	{ //record some error message
 		return;
 	}
-	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
+	_msgQueueP->AddHttpsResponseMessage(sid, msg, len, type);
 }
 
 bool HttpsManagerPair::InitWebManager(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
@@ -70,22 +70,9 @@ HttpsManagerPair::HttpsManagerPair()
 
 void HttpsManagerPair::StartWebManagerPair()
 {
-	
-	if (_recvHttpThread && _recvHttpThread->joinable())
-	{
-		_recvHttpThread->join();
-	}
 	if (_recvHttpsThread && _recvHttpsThread->joinable())
 	{
 		_recvHttpsThread->join();
-	}
-	if (_recvWsThread && _recvWsThread->joinable())
-	{
-		_recvWsThread->join();
-	}
-	if (_recvWssThread && _recvWssThread->joinable())
-	{
-		_recvWssThread->join();
 	}
 }
 

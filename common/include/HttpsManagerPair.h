@@ -43,18 +43,11 @@ private:
 	std::string _wssIP = "";
 	uint16_t	_wssPort = 0;
 	std::shared_ptr<spdlog::logger> _logger;
-	std::shared_ptr<std::thread> _recvHttpThread;
 	std::shared_ptr<std::thread> _recvHttpsThread;
-	std::shared_ptr<std::thread> _recvWsThread;
-	std::shared_ptr<std::thread> _recvWssThread;
 
-	uWS::Loop* _httpLoop = nullptr;
 	uWS::Loop* _httpsLoop = nullptr;
-	uWS::Loop* _wsLoop = nullptr;
-	uWS::Loop* _wssLoop = nullptr;
 
 	std::shared_ptr<MessageQueueManager> _msgQueueP;
-	uWS::Loop* _curLoop = nullptr;
 	std::shared_ptr<std::recursive_mutex> _threadSafeMutex;
 	std::shared_ptr<DBManager> _wsDbManager = nullptr;
 };
