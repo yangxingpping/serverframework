@@ -180,7 +180,7 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay->PushWebSocketClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
 		_webGateWay->NotifyClientResponse();
 		bHasMsg = _recvJsonMessages->try_dequeue(msg);
 	}
@@ -190,7 +190,7 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay->PushHttpClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
 		_webGateWay->NotifyClientResponse();
 		bHasMsg = _recvHttpJsonMessages->try_dequeue(msg);
 	}
@@ -200,7 +200,7 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay->PushHttpsClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
 		_webGateWay->NotifyClientResponse();
 		bHasMsg = _recvHttpsJsonMessages->try_dequeue(msg);
 	}
@@ -210,7 +210,7 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "world.hello" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcPBMessage), this, msg->sessionid ,std::string_view{ msg->msg });
-		_webGateWay->PushWebSocketClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
 		_webGateWay->NotifyClientResponse();
 		bHasMsg = _recvPBMessages->try_dequeue(msg);
 	}

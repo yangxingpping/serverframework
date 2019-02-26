@@ -18,9 +18,7 @@ public: //statck function
 	static WebSocketManagerPair* _sDefaultWsPair;
 public: //override functions
 	virtual void NotifyClientResponse() override;
-	virtual void PushWebSocketClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
-	virtual void PushHttpClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
-	virtual void PushHttpsClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
+	virtual void PushClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
 
 public:
 	WebSocketManagerPair();

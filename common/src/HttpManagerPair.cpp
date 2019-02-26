@@ -38,7 +38,7 @@ void HttpManagerPair::NotifyClientResponse()
 }
 
 
-void HttpManagerPair::PushWebSocketClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
+void HttpManagerPair::PushClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
 {
 	if (sid == INVALID_SESSION_ID || !msg)
 	{ //record some error message
@@ -47,23 +47,6 @@ void HttpManagerPair::PushWebSocketClientResponse(ResponseType type, SessionType
 	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
 }
 
-void HttpManagerPair::PushHttpClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
-{
-	if (sid == INVALID_SESSION_ID || !msg)
-	{ //record some error message
-		return;
-	}
-	_msgQueueP->AddHttpResponseMessage(sid, msg, len, type);
-}
-
-void HttpManagerPair::PushHttpsClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
-{
-	if (sid == INVALID_SESSION_ID || !msg)
-	{ //record some error message
-		return;
-	}
-	_msgQueueP->AddHttpsResponseMessage(sid, msg, len, type);
-}
 
 HttpManagerPair::HttpManagerPair()
 {

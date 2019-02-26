@@ -42,31 +42,13 @@ void SWebSocketManagerPair::NotifyClientResponse()
 
 
 
-void SWebSocketManagerPair::PushWebSocketClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
+void SWebSocketManagerPair::PushClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
 {
 	if (sid == INVALID_SESSION_ID || !msg)
 	{ //record some error message
 		return;
 	}
 	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
-}
-
-void SWebSocketManagerPair::PushHttpClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
-{
-	if (sid == INVALID_SESSION_ID || !msg)
-	{ //record some error message
-		return;
-	}
-	_msgQueueP->AddHttpResponseMessage(sid, msg, len, type);
-}
-
-void SWebSocketManagerPair::PushHttpsClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
-{
-	if (sid == INVALID_SESSION_ID || !msg)
-	{ //record some error message
-		return;
-	}
-	_msgQueueP->AddHttpsResponseMessage(sid, msg, len, type);
 }
 
 SWebSocketManagerPair::SWebSocketManagerPair()
