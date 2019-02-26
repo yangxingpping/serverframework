@@ -26,10 +26,5 @@ private:
 
 	RedisConfig		_redisConfig;
 	SqlDBConfig		_sqlConfig;
-	//std::string		_sqlUser = "root";			// mysql server ip;
-	//std::string		_sqlPass = "123456";		// mysql server port;
-	//std::string		_sqlodbc = "_odbcmysql";	//msyql server odbc connection
-	//std::string		_redisIp = "127.0.0.1"; // redis server ip;
-	//uint16_t		_redisPort = 6379;		// redis server port; 
 };
 
