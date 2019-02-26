@@ -20,16 +20,16 @@ public:
 	~MessageQueueManager();
 	void InitMessageQueueManager(std::shared_ptr<ProcManagerInterface> proc);
 
-	void AddWebRequestMessage(SessionType sessionid, const char* msg, size_t len);
+	void AddWebRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront);
 	void AddWebResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType);
 
-	void AddsWebRequestMessage(SessionType sessionid, const char* msg, size_t len);
+	void AddsWebRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront);
 	void AddsWebResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType);
 
-	void AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len);
+	void AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront);
 	void AddHttpResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType = ResponseType::unicast);
 
-	void AddHttpsRequestMessage(SessionType sessionid, const char* msg, size_t len);
+	void AddHttpsRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront);
 	void AddHttpsResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType = ResponseType::unicast);
 
 

@@ -49,7 +49,7 @@ private:
 
 	std::shared_ptr<ProcessMessageInterface> _procMessageImpl;
 
-	WebBaseInterface* _webGateWay = nullptr;
+	std::vector<WebBaseInterface*> _webGateWay;
 	uv_async_t* _asyncClientRequest;
 	bool _run = false;
 	std::shared_ptr<DBManager> _dbConnection;

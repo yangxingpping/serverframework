@@ -31,6 +31,6 @@ private:
 	std::shared_ptr<std::thread> _ioThread;
 	unsigned int	_threadSelectIndex = 0;
 	unsigned int	_threadMaxSize = 0;
-	WebBaseInterface* _webGateWayInterface = nullptr;
+	//WebBaseInterface* _webGateWayInterface = nullptr;
 };
 

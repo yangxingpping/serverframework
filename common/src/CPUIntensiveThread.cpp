@@ -24,7 +24,7 @@ void CPUIntensiveThread::SClientRequestComeCallback(uv_async_t* handle)
 }
 
 CPUIntensiveThread::CPUIntensiveThread(WebBaseInterface* pgw, std::shared_ptr<ProcessMessageInterface> pimpl)
-	:_webGateWay(pgw), _procMessageImpl(pimpl)
+	:_procMessageImpl(pimpl)
 {
 	_dbConnection = std::make_shared<DBManager>();
 	_cpuThreads = std::make_shared<std::thread>(&CPUIntensiveThread::CpuIntensiveProcThread, this);
@@ -34,6 +34,20 @@ CPUIntensiveThread::CPUIntensiveThread(WebBaseInterface* pgw, std::shared_ptr<Pr
 	_recvHttpPBMessages = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>>();
 	_recvHttpsJsonMessages = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>>();
 	_recvHttpsPBMessages = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>>();
+	bool bFound = false;
+	assert(pgw);
+	for (auto p : _webGateWay)
+	{
+		if (p == pgw)
+		{
+			bFound = true;
+			break;
+		}
+	}
+	if (!bFound)
+	{
+		_webGateWay.push_back(pgw);
+	}
 }
 
 
@@ -181,8 +195,8 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay->NotifyClientResponse();
+		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay[0]->NotifyClientResponse();
 		bHasMsg = _recvJsonMessages->try_dequeue(msg);
 	}
 
@@ -191,8 +205,8 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay->NotifyClientResponse();
+		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay[0]->NotifyClientResponse();
 		bHasMsg = _recvHttpJsonMessages->try_dequeue(msg);
 	}
 
@@ -201,8 +215,8 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay->NotifyClientResponse();
+		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay[0]->NotifyClientResponse();
 		bHasMsg = _recvHttpsJsonMessages->try_dequeue(msg);
 	}
 
@@ -211,8 +225,8 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "world.hello" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcPBMessage), this, msg->sessionid ,std::string_view{ msg->msg });
-		_webGateWay->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay->NotifyClientResponse();
+		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+		_webGateWay[0]->NotifyClientResponse();
 		bHasMsg = _recvPBMessages->try_dequeue(msg);
 	}
 }

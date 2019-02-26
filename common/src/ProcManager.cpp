@@ -18,10 +18,10 @@ ProcManager::~ProcManager()
 
 void ProcManager::InitProcManager(WebBaseInterface* pGateWay, unsigned int cpuTCount /*= 4*/)
 {
-	_webGateWayInterface = pGateWay;
+	//_webGateWayInterface = pGateWay;
 	for (unsigned int i = 0; i < cpuTCount; ++i)
 	{
-		_cpuThreads.push_back(std::make_shared<CPUIntensiveThread>(_webGateWayInterface, std::make_shared<ProcessMessageImpl>()));
+		_cpuThreads.push_back(std::make_shared<CPUIntensiveThread>(pGateWay, std::make_shared<ProcessMessageImpl>()));
 	}
 	_threadMaxSize = static_cast<unsigned int>(_cpuThreads.size());
 	_ioThread = std::make_shared<std::thread>(&ProcManager::IOIntensiveProcThread, this);

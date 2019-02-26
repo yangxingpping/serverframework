@@ -115,7 +115,7 @@ void HttpManagerPair::RecvHttpDataThreadFunc()
 					return;
 				}
 				auto sessionid = static_cast<SessionManager<uWS::HttpResponse<false>*>*>(this)->AddSession(resp);
-				_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1);
+				_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
 			}
 		});
 	

@@ -32,9 +32,9 @@ void MessageQueueManager::InitMessageQueueManager(std::shared_ptr<ProcManagerInt
 	_dispathcThread = std::make_shared<std::thread>(&MessageQueueManager::DispathMessageThreadFunc, this);
 }
 
-void MessageQueueManager::AddWebRequestMessage(SessionType sessionid, const char* msg, size_t len)
+void MessageQueueManager::AddWebRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront)
 {
-	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{sessionid, {msg, len}, PackSourceHostType::client });
+	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{sessionid, {msg, len}, PackSourceHostType::client, pfront });
 	_webRecvQueue->enqueue(msg2);
 	if (_run)
 	{
@@ -49,9 +49,9 @@ void MessageQueueManager::AddWebResponseMessage(SessionType sessionid, const cha
 }
 
 
-void MessageQueueManager::AddsWebRequestMessage(SessionType sessionid, const char* msg, size_t len)
+void MessageQueueManager::AddsWebRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront)
 {
-	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client });
+	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client, pfront });
 	_swebRecvQueue->enqueue(msg2);
 	if (_run)
 	{
@@ -65,9 +65,9 @@ void MessageQueueManager::AddsWebResponseMessage(SessionType sessionid, const ch
 	_swebSendQueue->enqueue(msg2);
 }
 
-void MessageQueueManager::AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len)
+void MessageQueueManager::AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront)
 {
-	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client});
+	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client, pfront});
 	_httpRecvQueue->enqueue(msg2);
 	if (_run)
 	{
@@ -82,9 +82,9 @@ void MessageQueueManager::AddHttpResponseMessage(SessionType sessionid, const ch
 	_httpSendQueue->enqueue(msg2);
 }
 
-void MessageQueueManager::AddHttpsRequestMessage(SessionType sessionid, const char* msg, size_t len)
+void MessageQueueManager::AddHttpsRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront)
 {
-	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client });
+	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client, pfront });
 	_httpsRecvQueue->enqueue(msg2);
 	if (_run)
 	{

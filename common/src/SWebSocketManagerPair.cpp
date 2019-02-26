@@ -105,7 +105,7 @@ void SWebSocketManagerPair::RecvWssDataThreadFunc()
 	auto funcMessage = [this](WebSocket* ws, std::string_view message, uWS::OpCode opcode)
 	{
 		auto sessionid = static_cast<SessionManager<uWS::WebSocket<true, true>*>*>(this)->GetSessionIDByConnectionPt(ws);
-		_msgQueueP->AddWebRequestMessage(sessionid, &message[0], message.length());
+		_msgQueueP->AddWebRequestMessage(sessionid, &message[0], message.length(), this);
 	};
 	auto funcDrain = [this](WebSocket* ws)
 	{

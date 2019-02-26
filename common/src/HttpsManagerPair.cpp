@@ -115,7 +115,7 @@ void HttpsManagerPair::RecvHttpsDataThreadFunc()
 					return;
 				}
 				auto sessionid = static_cast<SessionManager<struct uWS::HttpResponse<true>*>*>(this)->AddSession(resp);
-				_msgQueueP->AddHttpsRequestMessage(sessionid, query.data() + 1, query.length() - 1);
+				_msgQueueP->AddHttpsRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
 			}
 		});
 	app->listen(_httpsPort, [](auto* token) {

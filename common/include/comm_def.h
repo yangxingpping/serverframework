@@ -7,6 +7,7 @@
 #define LOGGER_NAME		"filelog"	//global logger name
 #define LOG_FILE_NAME	"a.log"		//
 
+#include "CustomForwardDeclare.h"
 #include "share_def.h"
 
 #include <string>
@@ -30,7 +31,7 @@ class SessionMessage
 {
 public:
 	SessionMessage(SessionType sid, std::string m,
-		PackSourceHostType type=PackSourceHostType::client):sessionid(sid),hostType(type)
+		PackSourceHostType type, WebBaseInterface* pfront):sessionid(sid),hostType(type), pSource(pfront)
 	{
 		msg = m;
 	}
@@ -38,6 +39,7 @@ public:
 	SessionType sessionid;
 	PackSourceHostType hostType;
 	std::string msg;
+	WebBaseInterface* pSource = nullptr;
 };
 
 class SessionRequestMessageBody
@@ -49,6 +51,7 @@ public:
 	}
 	SessionType sessionid;
 	std::string msg;
+	WebBaseInterface* pSource = nullptr;
 };
 
 enum class ResponseType
@@ -64,7 +67,7 @@ using SessionRequestMessage = SessionMessage;
 class SessionResponseMessage : public SessionMessage
 {
 public:
-	SessionResponseMessage(ResponseType type, SessionType sid, std::string msg) :SessionMessage(sid, msg)
+	SessionResponseMessage(ResponseType type, SessionType sid, std::string msg) :SessionMessage(sid, msg, PackSourceHostType::client,nullptr)
 	{
 		respType = type;
 	}
