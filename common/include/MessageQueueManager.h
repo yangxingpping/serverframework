@@ -23,6 +23,9 @@ public:
 	void AddWebRequestMessage(SessionType sessionid, const char* msg, size_t len);
 	void AddWebResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType);
 
+	void AddsWebRequestMessage(SessionType sessionid, const char* msg, size_t len);
+	void AddsWebResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType);
+
 	void AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len);
 	void AddHttpResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType = ResponseType::unicast);
 
@@ -31,6 +34,7 @@ public:
 
 
 	std::shared_ptr<SessionResponseMessage> GetWebMessageResp();
+	std::shared_ptr<SessionResponseMessage> GetSWebMessageResp();
 	std::shared_ptr<SessionResponseMessage> GetHttpMessageResp();
 	std::shared_ptr<SessionResponseMessage> GetHttpsMessageResp();
 	void AddSocketMessage(SessionType sessionid, char* msg, size_t len);
@@ -43,6 +47,8 @@ private:
 
 	std::shared_ptr<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _sockRecvQueue;
 	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _sockSendQueue;
+	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _swebRecvQueue;
+	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _swebSendQueue;
 	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _webRecvQueue;
 	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _webSendQueue;
 	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>, moodycamel::ConcurrentQueueDefaultTraits>> _httpRecvQueue;

@@ -149,7 +149,7 @@ void SWebSocketManagerPair::RecvWssDataThreadFunc()
 
 void SWebSocketManagerPair::SendClientResponse()
 {
-	auto msgResp = _msgQueueP->GetWebMessageResp();
+	auto msgResp = _msgQueueP->GetSWebMessageResp();
 	while (msgResp->sessionid != INVALID_SESSION_ID)
 	{
 		switch (msgResp->respType)

@@ -15,6 +15,9 @@ MessageQueueManager::MessageQueueManager()
 	_httpSendQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>>>();
 	_httpsRecvQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>>>();
 	_httpsSendQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>>>();
+	_swebRecvQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>>>();
+	_swebSendQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>>>();
+
 
 }
 
@@ -45,6 +48,22 @@ void MessageQueueManager::AddWebResponseMessage(SessionType sessionid, const cha
 	_webSendQueue->enqueue(msg2);
 }
 
+
+void MessageQueueManager::AddsWebRequestMessage(SessionType sessionid, const char* msg, size_t len)
+{
+	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, {msg, len}, PackSourceHostType::client });
+	_swebRecvQueue->enqueue(msg2);
+	if (_run)
+	{
+		uv_async_send(_asyncClientConneResponse);
+	}
+}
+
+void MessageQueueManager::AddsWebResponseMessage(SessionType sessionid, const char* msg, size_t len, ResponseType broadType)
+{
+	auto msg2 = std::shared_ptr<SessionResponseMessage>(new SessionResponseMessage({ ResponseType::unicast ,sessionid, {msg, len} }));
+	_swebSendQueue->enqueue(msg2);
+}
 
 void MessageQueueManager::AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len)
 {
@@ -86,6 +105,13 @@ std::shared_ptr<SessionResponseMessage> MessageQueueManager::GetWebMessageResp()
 	return msgRet;
 }
 
+
+std::shared_ptr<SessionResponseMessage> MessageQueueManager::GetSWebMessageResp()
+{
+	std::shared_ptr<SessionResponseMessage> msgRet = std::shared_ptr<SessionResponseMessage>(new SessionResponseMessage({ ResponseType::unicast, INVALID_SESSION_ID, {""} }));
+	_swebSendQueue->try_dequeue(msgRet);
+	return msgRet;
+}
 
 std::shared_ptr<SessionResponseMessage> MessageQueueManager::GetHttpMessageResp()
 {
