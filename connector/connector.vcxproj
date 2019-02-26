@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;GLOG_NO_ABBREVIATED_SEVERITIES;C_WINDOWS;NEWUWEBSCKETS;LIBUS_USE_LIBUV;WSSERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../common/include;../common/include/uSockets/src;../common/include/newuwebsockets/src;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../common/include;../common/include/iguana;../common/include/uSockets/src;../common/include/newuwebsockets/src;</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
