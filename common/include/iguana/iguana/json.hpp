@@ -1206,7 +1206,7 @@ namespace iguana { namespace json
 		}
 
 		template<typename T>
-		inline constexpr std::enable_if_t<is_tuple<std::decay_t<T>>::value, bool>
+		inline std::enable_if_t<is_tuple<std::decay_t<T>>::value, bool>
 			from_json(T&& t, const char *buf, size_t len = -1) {
 			using U = std::decay_t<T>;
 			g_has_error = false;
@@ -1220,7 +1220,7 @@ namespace iguana { namespace json
 		}
 
 		template<typename T>
-		inline constexpr std::enable_if_t<is_sequence_container<std::decay_t<T>>::value, bool> 
+		inline std::enable_if_t<is_sequence_container<std::decay_t<T>>::value, bool> 
 			from_json(T&& v, const char *buf, size_t len = -1) {
 			v.clear();
 			using U = typename std::decay_t<T>::value_type;
@@ -1240,7 +1240,7 @@ namespace iguana { namespace json
 		}
 
         template<typename T>
-        inline constexpr std::enable_if_t<is_reflection_v<T>, bool> from_json(T &&t, const char *buf, size_t len = -1) {
+        inline  std::enable_if_t<is_reflection_v<T>, bool> from_json(T &&t, const char *buf, size_t len = -1) {
             g_has_error = false;
             reader_t rd(buf, len);
             do_read(rd, t);
@@ -1249,7 +1249,7 @@ namespace iguana { namespace json
 
         //this interface support disorderly parse, however slower than from_json interface
         template<typename T, typename = std::enable_if_t<is_reflection<T>::value>>
-        inline constexpr bool from_json0(T &&t, const char *buf, size_t len = -1) {
+        inline  bool from_json0(T &&t, const char *buf, size_t len = -1) {
             g_has_error = false;
             reader_t rd(buf, len);
             do_read0(rd, t);
