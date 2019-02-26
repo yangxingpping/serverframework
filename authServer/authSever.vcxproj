@@ -100,12 +100,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING;GLOG_NO_ABBREVIATED_SEVERITIES;C_WINDOWS;NEWUWEBSCKETS;LIBUS_USE_LIBUV;WSSERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../common/include;../common/include/iguana;../common/include/uSockets/src;../common/include/newuwebsockets/src;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4819;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>Dbghelp.lib;xxhash.lib;Ws2_32.lib;uSockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -143,7 +147,60 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\src\CPUIntensiveThread.cpp" />
+    <ClCompile Include="..\common\src\DBManager.cpp" />
+    <ClCompile Include="..\common\src\DumpManager.cpp" />
+    <ClCompile Include="..\common\src\HttpManagerPair.cpp" />
+    <ClCompile Include="..\common\src\HttpsManagerPair.cpp" />
+    <ClCompile Include="..\common\src\LogInit.cpp" />
+    <ClCompile Include="..\common\src\MessageQueueManager.cpp" />
+    <ClCompile Include="..\common\src\PackUtils.cpp" />
+    <ClCompile Include="..\common\src\PBMessageCallBacks.cpp" />
+    <ClCompile Include="..\common\src\PBMsgCallBackDispatcher.cpp" />
+    <ClCompile Include="..\common\src\ProcessMessageImpl.cpp" />
+    <ClCompile Include="..\common\src\ProcManager.cpp" />
+    <ClCompile Include="..\common\src\query.pb.cc">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> 4819;4251</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\common\src\SessionManager.cpp" />
+    <ClCompile Include="..\common\src\SWebSocketManagerPair.cpp" />
+    <ClCompile Include="..\common\src\Utils.cpp" />
+    <ClCompile Include="..\common\src\WebSocketManagerPair.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\include\comm_def.h" />
+    <ClInclude Include="..\common\include\CPUIntensiveThread.h" />
+    <ClInclude Include="..\common\include\CustomForwardDeclare.h" />
+    <ClInclude Include="..\common\include\CustomMacro.h" />
+    <ClInclude Include="..\common\include\DBManager.h" />
+    <ClInclude Include="..\common\include\DumpManager.h" />
+    <ClInclude Include="..\common\include\HttpManagerPair.h" />
+    <ClInclude Include="..\common\include\HttpsManagerPair.h" />
+    <ClInclude Include="..\common\include\JsonStructs.h" />
+    <ClInclude Include="..\common\include\LogInit.h" />
+    <ClInclude Include="..\common\include\MessageQueueManager.h" />
+    <ClInclude Include="..\common\include\PackUtils.h" />
+    <ClInclude Include="..\common\include\PBMessageCallBacks.h" />
+    <ClInclude Include="..\common\include\PBMesssageForwardDeclare.h" />
+    <ClInclude Include="..\common\include\PBMsgCallBackDispatcher.h" />
+    <ClInclude Include="..\common\include\PBMsgCallBackImpl.h" />
+    <ClInclude Include="..\common\include\PBMsgCallBackInterface.h" />
+    <ClInclude Include="..\common\include\PrimitiveDef.h" />
+    <ClInclude Include="..\common\include\ProcessMessageImpl.h" />
+    <ClInclude Include="..\common\include\ProcessMessageInterface.h" />
+    <ClInclude Include="..\common\include\ProcManager.h" />
+    <ClInclude Include="..\common\include\ProcManagerInterface.h" />
+    <ClInclude Include="..\common\include\query.pb.h" />
+    <ClInclude Include="..\common\include\SessionManager.h" />
+    <ClInclude Include="..\common\include\share_def.h" />
+    <ClInclude Include="..\common\include\SWebSocketManagerPair.h" />
+    <ClInclude Include="..\common\include\ThirdPartyuWS.h" />
+    <ClInclude Include="..\common\include\Utils.h" />
+    <ClInclude Include="..\common\include\WebBaseInterface.h" />
+    <ClInclude Include="..\common\include\WebSocketManagerPair.h" />
+    <ClInclude Include="..\common\include\winmain-inl.h" />
+    <ClInclude Include="..\common\include\WrapperCaller.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
