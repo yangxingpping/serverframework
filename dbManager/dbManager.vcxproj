@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\src\CPUIntensiveThread.cpp" />
     <ClCompile Include="..\common\src\DBManager.cpp" />
     <ClCompile Include="..\common\src\DumpManager.cpp" />
     <ClCompile Include="..\common\src\MessageQueueManager.cpp" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\include\comm_def.h" />
+    <ClInclude Include="..\common\include\CPUIntensiveThread.h" />
     <ClInclude Include="..\common\include\CustomForwardDeclare.h" />
     <ClInclude Include="..\common\include\CustomMacro.h" />
     <ClInclude Include="..\common\include\DBManager.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="..\common\include\WebBaseInterface.h" />
     <ClInclude Include="..\common\include\WebManagerPair.h" />
     <ClInclude Include="..\common\include\winmain-inl.h" />
+    <ClInclude Include="..\common\include\WrapperCaller.h" />
     <ClInclude Include="NngRelateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

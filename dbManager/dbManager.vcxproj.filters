@@ -39,6 +39,9 @@
     <ClCompile Include="..\common\src\WebManagerPair.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\src\CPUIntensiveThread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\include\comm_def.h">
@@ -84,6 +87,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\common\include\winmain-inl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\CPUIntensiveThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\WrapperCaller.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
