@@ -174,7 +174,7 @@ void MessageQueueManager::MemAsyncRecvDataCallback()
 	{
 		for (auto& msg : vecMsgs)
 		{
-			_procPt->DispatchClientMessage(msg, PackSourceRouteType::http);
+			_procPt->DispatchClientMessage(msg,  PackSourceRouteType::http);
 		}
 		vecMsgs.clear();
 		httpmsgsize = _httpRecvQueue->try_dequeue_bulk(std::back_inserter(vecMsgs), maxSize);

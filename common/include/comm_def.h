@@ -45,7 +45,7 @@ public:
 class SessionRequestMessageBody
 {
 public:
-	SessionRequestMessageBody(SessionType sid, std::string m):sessionid(sid)
+	SessionRequestMessageBody(SessionType sid, std::string m, WebBaseInterface* pfront):sessionid(sid), pSource(pfront)
 	{
 		msg = m;
 	}

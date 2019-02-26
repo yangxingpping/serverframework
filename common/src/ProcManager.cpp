@@ -50,7 +50,7 @@ void ProcManager::DispatchClientMessage(std::shared_ptr<SessionRequestMessage> m
 	char chEPackType = msg->msg[0];
 	EPackType packType = static_cast<EPackType>(chEPackType-'0');
 	std::shared_ptr<SessionRequestMessageBody> body = std::shared_ptr<SessionRequestMessageBody>(
-		new SessionRequestMessageBody(msg->sessionid, { &(msg->msg)[1], msg->msg.length() - 1 }));
+		new SessionRequestMessageBody(msg->sessionid, { &(msg->msg)[1], msg->msg.length() - 1 }, msg->pSource));
 	auto _tempIndex = (_threadSelectIndex++) % _threadMaxSize;
 	switch (type)
 	{

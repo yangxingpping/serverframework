@@ -195,8 +195,12 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay[0]->NotifyClientResponse();
+		if (msg->pSource)
+		{
+			_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+			_webGateWay[0]->NotifyClientResponse();
+		}
+		else {}
 		bHasMsg = _recvJsonMessages->try_dequeue(msg);
 	}
 
@@ -205,8 +209,12 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay[0]->NotifyClientResponse();
+		if (msg->pSource)
+		{
+			_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+			_webGateWay[0]->NotifyClientResponse();
+		}
+		else{}
 		bHasMsg = _recvHttpJsonMessages->try_dequeue(msg);
 	}
 
@@ -215,8 +223,15 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "hello.world" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
-		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay[0]->NotifyClientResponse();
+		if (msg->pSource)
+		{
+			msg->pSource->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+			msg->pSource->NotifyClientResponse();
+		}
+		else //something was wrong
+		{
+
+		}
 		bHasMsg = _recvHttpsJsonMessages->try_dequeue(msg);
 	}
 
@@ -225,8 +240,13 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 	{
 		std::string str{ "world.hello" };
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcPBMessage), this, msg->sessionid ,std::string_view{ msg->msg });
-		_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-		_webGateWay[0]->NotifyClientResponse();
+		if (msg->pSource)
+		{
+			msg->pSource->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+			msg->pSource->NotifyClientResponse();
+		}
+		else
+		{ }
 		bHasMsg = _recvPBMessages->try_dequeue(msg);
 	}
 }
