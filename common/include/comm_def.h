@@ -7,9 +7,6 @@
 #define LOGGER_NAME		"filelog"	//global logger name
 #define LOG_FILE_NAME	"a.log"		//
 
-
-
-
 #include "share_def.h"
 
 #include <string>
@@ -79,4 +76,18 @@ public:
 struct WebSocketDataPerson
 {
 
+};
+
+struct SqlDBConfig
+{
+	std::string		_user;
+	std::string		_pass;
+	std::string		_odbc;
+};
+
+struct RedisConfig
+{
+	std::string		_ip;
+	uint16_t		_port;
+	std::string		_pass;
 };

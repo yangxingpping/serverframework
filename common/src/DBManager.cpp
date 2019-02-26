@@ -10,8 +10,8 @@
 
 
 
-DBManager::DBManager(std::string sqluser/*="127.0.0.1"*/, std::string sqlpass /*= "123456"*/, std::string odbc /*= "_odbcmysql"*/, std::string redisip/*="127.0.0.1"*/, uint16_t redisport/*=6379*/)
-	:_sqlUser(sqluser), _sqlPass(sqlpass), _redisIp(redisip), _redisPort(redisport), _sqlodbc(odbc)
+DBManager::DBManager(RedisConfig redisconf, SqlDBConfig sqlconf)
+	:_redisConfig(redisconf), _sqlConfig(sqlconf)
 {
 
 }
@@ -27,11 +27,11 @@ DBManager::~DBManager()
 
 void DBManager::startDBManager()
 {
-	std::string strsql{ "connect failed with sql user=" + _sqlUser + ",pass=" + _sqlPass + ",odbc=" + _sqlodbc };
+	std::string strsql{ "connect failed with sql user=" + _sqlConfig._user + ",pass=" + _sqlConfig._pass + ",odbc=" + _sqlConfig._odbc };
 	_dbConnection = new otl_connect();
 	_rdConnection = std::make_shared<cpp_redis::client>();
-	_rdConnection->connect(_redisIp, _redisPort);
-	_dbConnection->rlogon(_sqlUser.c_str(), _sqlPass.c_str(), _sqlodbc.c_str());
+	_rdConnection->connect(_redisConfig._ip, _redisConfig._port);
+	_dbConnection->rlogon(_sqlConfig._user.c_str(), _sqlConfig._pass.c_str(), _sqlConfig._odbc.c_str());
 	_pullQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<std::string>, moodycamel::ConcurrentQueueDefaultTraits>>();
 	_procPullMsgThread = std::make_shared<std::thread>(&DBManager::procPullThread, this);
 	
