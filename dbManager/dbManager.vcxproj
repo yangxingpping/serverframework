@@ -170,6 +170,7 @@
     <ClInclude Include="..\common\include\Utils.h" />
     <ClInclude Include="..\common\include\WebBaseInterface.h" />
     <ClInclude Include="..\common\include\WebManagerPair.h" />
+    <ClInclude Include="..\common\include\winmain-inl.h" />
     <ClInclude Include="NngRelateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

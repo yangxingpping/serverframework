@@ -32,8 +32,9 @@ void DBManager::startDBManager()
 	_rdConnection = std::make_shared<cpp_redis::client>();
 	_rdConnection->connect(_redisIp, _redisPort);
 	_dbConnection->rlogon(_sqlUser.c_str(), _sqlPass.c_str(), _sqlodbc.c_str());
-	_procPullMsgThread = std::make_shared<std::thread>(&DBManager::procPullThread, this);
 	_pullQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<std::string>, moodycamel::ConcurrentQueueDefaultTraits>>();
+	_procPullMsgThread = std::make_shared<std::thread>(&DBManager::procPullThread, this);
+	
 }
 
 void DBManager::procPullThread()

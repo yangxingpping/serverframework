@@ -83,5 +83,8 @@
     <ClInclude Include="..\common\include\MacroDB.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\include\winmain-inl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

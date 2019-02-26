@@ -9,7 +9,7 @@
 NngRelateManager::NngRelateManager(std::string pubaddr /*= "tcp://127.0.0.1:100"*/, std::string pulladdr /*= "tcp://127.0.0.1:101"*/)
 	:_pubAddress(pubaddr), _pullAddress(pulladdr)
 {
-
+	_pubQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<std::string>, moodycamel::ConcurrentQueueDefaultTraits>>();
 }
 
 

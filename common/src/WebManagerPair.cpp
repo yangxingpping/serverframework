@@ -103,11 +103,13 @@ WebManagerPair::WebManagerPair()
 {
 	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
 	_wsDbManager = std::make_shared<DBManager>();
+	_wsDbManager->startDBManager();
 }
 
 bool WebManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
+	
 	_httpIP = ip;
 	_httpPort = port;
 	_msgQueueP = msgqueue;
