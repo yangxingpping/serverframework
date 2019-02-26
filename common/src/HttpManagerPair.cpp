@@ -11,6 +11,7 @@
 
 #include "comm_def.h"
 
+
 #include <functional>
 
 HttpManagerPair* HttpManagerPair::_sDefaultHttpPair = nullptr;
@@ -100,6 +101,25 @@ void HttpManagerPair::RecvHttpDataThreadFunc()
 	
 	uWS::App app;
 	app.get("/*", [this](HttpResponse* resp, HttpRequest* req)
+		{
+			auto url = req->getUrl();
+			auto method = req->getMethod();
+			resp->onAborted([]() {
+				std::cout << "aborted" << std::endl;
+				});
+			if (method == "get") //get method
+			{
+				auto query = req->getQuery();
+				if (query.length() <= 2)
+				{
+					resp->end("invalid parameters");
+					return;
+				}
+				auto sessionid = static_cast<SessionManager<uWS::HttpResponse<false>*>*>(this)->AddSession(resp);
+				_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
+			}
+		});
+	app.post("/*", [this](HttpResponse* resp, HttpRequest* req)
 		{
 			auto url = req->getUrl();
 			auto method = req->getMethod();

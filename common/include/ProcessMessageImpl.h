@@ -29,7 +29,7 @@ protected:
 	void _ProcRoomMessage(SessionType sid, int ass, std::string_view msg);
 	
 protected:
-	void _ProcUserHallLogin(UserHallLoginRequest* ur);
+	void _ProcUserHallLogin(int user, std::string& pass);
 
 private:
 	using ProcMainType = void (ProcessMessageImpl::*)(SessionType, int, std::string_view);

@@ -4,9 +4,13 @@
 #include "PackUtils.h"
 
 #include "nlohmann/json.hpp"
+#include "cppcodec/base32_crockford.hpp"
+#include "cppcodec/base64_rfc4648.hpp"
 
 #include <iostream>
 #include <string>
+#include <vector>
+
 #include <QNetworkRequest>
 #include <QUrl>
 
@@ -18,19 +22,27 @@ NetWorkRelateLogic::NetWorkRelateLogic(QObject *parent) : QObject(parent)
 
 QString NetWorkRelateLogic::genLoginurl(QString user, QString pass)
 {
-	QString ret=_loginUrl;
+	using base64 = cppcodec::base64_rfc4648;
+	QString ret = _loginUrl + "?";// "login?";
+	//ret += "user=" + user + "&pass=" + pass;
 	using json = nlohmann::json;
 	EPackType type = EPackType::JSONPACK;
 	MainClassify maincmd = MainClassify::HallLogic;
 	HallAssistRequest asscmd = HallAssistRequest::UserLogin;
 	json juser;
-	juser["user"] = user.toStdString();
-	juser["pass"] = pass.toStdString();
-	ret += QString::fromStdString(std::to_string((int)type));
+	bool bConvert = false;
+	int userid = user.toInt(&bConvert);
+	juser["userid"] = userid;
+	juser["password"] = pass.toStdString();
+	//ret += QString::fromStdString(std::to_string((int)type));
+	std::string cmds = std::to_string((int)type);
+	cmds += PackUtils::PackMainAssCmd(MainCmdType(maincmd), UndefineAssist(asscmd));
+	cmds += juser.dump();
+	auto decodedata = base64::encode(cmds);
 	
-	auto cmds = PackUtils::PackMainAssCmd(MainCmdType(maincmd), UndefineAssist(asscmd));
-	ret += cmds.data();
-	ret += QString::fromStdString(juser.dump());
+	//ret += cmds.data();
+	//ret += QString::fromStdString(juser.dump());
+	ret += decodedata.data(); //cmds.data();
 	return ret;
 }
 

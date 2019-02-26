@@ -8,6 +8,8 @@
 #include "Utils.h"
 #include "JsonStructs.h"
 
+#include "nlohmann/json.hpp"
+
 #include <cassert>
 
 
@@ -90,13 +92,14 @@ void ProcessMessageImpl::_ProcRoomMessage(SessionType sid, int ass, std::string_
 	}
 }
 
-void ProcessMessageImpl::_ProcUserHallLogin(UserHallLoginRequest* ur)
+void ProcessMessageImpl::_ProcUserHallLogin(int user, std::string& pass)
 {
 
 }
 
 void ProcessMessageImpl::_ProcHallMessage(SessionType sid, int ass, std::string_view msg)
 {
+	using  json = nlohmann::json;
 	HallAssistRequest mass2 = static_cast<HallAssistRequest>(ass);
 	bool bSuccess = false;
 	switch (mass2)
@@ -106,16 +109,11 @@ void ProcessMessageImpl::_ProcHallMessage(SessionType sid, int ass, std::string_
 	}break;
 	case HallAssistRequest::UserLogin:
 	{
-		UserHallLoginRequest userrequest;
-		bSuccess = iguana::json::from_json0(userrequest, &msg[0]);
-		if (bSuccess)
-		{
-			_ProcUserHallLogin(&userrequest);
-		}
-		else
-		{
-			//log error info
-		}
+		auto juserlogin = json::parse(msg);
+		
+		std::string pass = juserlogin["password"].get<std::string>();
+		_ProcUserHallLogin(juserlogin["userid"].get<int>(), pass);
+
 	}break;
 	case HallAssistRequest::GetAllRooms:
 	{

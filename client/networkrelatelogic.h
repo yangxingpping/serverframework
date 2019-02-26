@@ -23,7 +23,7 @@ public slots:
 
 private:
     QNetworkAccessManager _manager;
-	QString _loginUrl = "http://127.0.0.1:1000/?";
+	QString _loginUrl = "http://127.0.0.1:1000/";
 };
 
 #endif // NETWORKRELATELOGIC_H

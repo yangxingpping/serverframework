@@ -187,7 +187,9 @@
     </QtRcc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\src\PackUtils.cpp" />
+    <ClCompile Include="..\common\src\PackUtils.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4577;4467;4819;4251;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="networkrelatelogic.cpp" />
   </ItemGroup>
