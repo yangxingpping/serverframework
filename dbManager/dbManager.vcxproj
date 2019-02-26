@@ -156,8 +156,12 @@
     <ClCompile Include="..\common\src\MessageQueueManager.cpp" />
     <ClCompile Include="..\common\src\PackUtils.cpp" />
     <ClCompile Include="..\common\src\PBMessageCallBacks.cpp" />
-    <ClCompile Include="..\common\src\PBMsgCallBackDispatcher.cpp" />
-    <ClCompile Include="..\common\src\ProcessMessageImpl.cpp" />
+    <ClCompile Include="..\common\src\PBMsgCallBackDispatcher.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4819;4251</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="..\common\src\ProcessMessageImpl.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4819;4251</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="..\common\src\ProcManager.cpp" />
     <ClCompile Include="..\common\src\query.pb.cc">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> 4819;4251</DisableSpecificWarnings>

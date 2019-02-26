@@ -158,14 +158,23 @@
     <ClCompile Include="..\common\src\PBMessageCallBacks.cpp" />
     <ClCompile Include="..\common\src\PBMsgCallBackDispatcher.cpp" />
     <ClCompile Include="..\common\src\ProcessMessageImpl.cpp" />
-    <ClCompile Include="..\common\src\ProcManager.cpp" />
+    <ClCompile Include="..\common\src\ProcManager.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="..\common\src\query.pb.cc">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> 4819;4251</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\common\src\SessionManager.cpp" />
-    <ClCompile Include="..\common\src\SWebSocketManagerPair.cpp" />
+    <ClCompile Include="..\common\src\SWebSocketManagerPair.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="..\common\src\Utils.cpp" />
-    <ClCompile Include="..\common\src\WebSocketManagerPair.cpp" />
+    <ClCompile Include="..\common\src\WebSocketManagerPair.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
