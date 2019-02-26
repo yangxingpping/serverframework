@@ -44,7 +44,7 @@ void HttpManagerPair::PushClientResponse(ResponseType type, SessionType sid, con
 	{ //record some error message
 		return;
 	}
-	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
+	_msgQueueP->AddHttpResponseMessage(sid, msg, len, type);
 }
 
 
