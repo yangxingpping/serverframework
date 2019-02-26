@@ -53,5 +53,6 @@ private:
 	uv_async_t* _asyncClientRequest;
 	bool _run = false;
 	std::shared_ptr<DBManager> _dbConnection;
+	std::string _strResp; //store response
 };
 
