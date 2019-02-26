@@ -4,7 +4,7 @@
 
 #include "spdlog/spdlog.h"
 #include "SessionManager.h"
-#include "WebManagerPair.h"
+#include "HttpsManagerPair.h"
 #include "WebBaseInterface.h"
 #include "MessageQueueManager.h"
 #include "DBManager.h"
@@ -13,16 +13,12 @@
 
 #include <functional>
 
-WebManagerPair* WebManagerPair::_sDefaultHttpPair = nullptr;
-WebManagerPair* WebManagerPair::_sDefaultHttpsPair = nullptr;
-WebManagerPair* WebManagerPair::_sDefaultWsPair = nullptr;
-WebManagerPair* WebManagerPair::_sDefaultWssPair = nullptr;
 
-WebManagerPair* WebManagerPair::defaultHttpPair()
+HttpsManagerPair* HttpsManagerPair::defaultHttpsPair()
 {
-	if (_sDefaultHttpPair)
+	if (_sDefaultHttpsPair)
 	{
-		return _sDefaultHttpPair;
+		return _sDefaultHttpsPair;
 	}
 	else
 	{
@@ -31,48 +27,16 @@ WebManagerPair* WebManagerPair::defaultHttpPair()
 	}
 }
 
-WebManagerPair* WebManagerPair::defaultWebSocketPair()
-{
-	if (_sDefaultWsPair)
-	{
-		return _sDefaultWsPair;
-	}
-	else
-	{
-		assert(false);
-		return nullptr;
-	}
-}
+HttpsManagerPair* HttpsManagerPair::_sDefaultHttpsPair = nullptr;
 
-void WebManagerPair::NotifyHttpResponse()
-{
-	_httpLoop->defer([this]() {
-		_sDefaultHttpPair->SendClientResponse();
-		});
-}
-
-void WebManagerPair::NotifyHttpsResponse()
-{
-	_httpsLoop->defer([this]() {
-		_sDefaultHttpPair->SendClientResponse();
-		});
-}
-
-void WebManagerPair::NotifyWsResponse()
-{
-	_wsLoop->defer([this]() {
-		_sDefaultHttpPair->SendClientResponse();
-		});
-}
-
-void WebManagerPair::NotifyWssResponse()
+void HttpsManagerPair::NotifyClientResponse()
 {
 	_wssLoop->defer([this]() {
-		_sDefaultHttpPair->SendClientResponse();
+		_sDefaultHttpsPair->SendClientResponse();
 		});
 }
 
-void WebManagerPair::PushWebSocketClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
+void HttpsManagerPair::PushWebSocketClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
 {
 	if (sid == INVALID_SESSION_ID || !msg)
 	{ //record some error message
@@ -81,7 +45,7 @@ void WebManagerPair::PushWebSocketClientResponse(ResponseType type, SessionType 
 	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
 }
 
-void WebManagerPair::PushHttpClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
+void HttpsManagerPair::PushHttpClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
 {
 	if (sid == INVALID_SESSION_ID || !msg)
 	{ //record some error message
@@ -90,7 +54,7 @@ void WebManagerPair::PushHttpClientResponse(ResponseType type, SessionType sid, 
 	_msgQueueP->AddHttpResponseMessage(sid, msg, len, type);
 }
 
-void WebManagerPair::PushHttpsClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
+void HttpsManagerPair::PushHttpsClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len)
 {
 	if (sid == INVALID_SESSION_ID || !msg)
 	{ //record some error message
@@ -99,14 +63,14 @@ void WebManagerPair::PushHttpsClientResponse(ResponseType type, SessionType sid,
 	_msgQueueP->AddHttpsResponseMessage(sid, msg, len, type);
 }
 
-WebManagerPair::WebManagerPair()
+HttpsManagerPair::HttpsManagerPair()
 {
 	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
 	_wsDbManager = std::make_shared<DBManager>();
 	_wsDbManager->startDBManager();
 }
 
-bool WebManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool HttpsManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
 	
@@ -114,76 +78,65 @@ bool WebManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::sha
 	_httpPort = port;
 	_msgQueueP = msgqueue;
 	_logger = spdlog::get(LOGGER_NAME);
-	_recvHttpThread = std::make_shared<std::thread>(&WebManagerPair::RecvHttpDataThreadFunc, this);
+	_recvHttpThread = std::make_shared<std::thread>(&HttpsManagerPair::RecvHttpDataThreadFunc, this);
 	if (_logger)
 	{
 		bret = true;
 	}
-	_sDefaultHttpPair = this;
 	_sDefaultHttpsPair = this;
-	_sDefaultWsPair = this;
-	_sDefaultWssPair = this;
+	
 	return bret;
 }
 
-bool WebManagerPair::InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool HttpsManagerPair::InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
 	_httpsIP = ip;
 	_httpsPort = port;
 	_msgQueueP = msgqueue;
 	_logger = spdlog::get(LOGGER_NAME);
-	_recvHttpsThread = std::make_shared<std::thread>(&WebManagerPair::RecvHttpsDataThreadFunc, this);
+	_recvHttpsThread = std::make_shared<std::thread>(&HttpsManagerPair::RecvHttpsDataThreadFunc, this);
 	if (_logger)
 	{
 		bret = true;
 	}
-	_sDefaultHttpPair = this;
 	_sDefaultHttpsPair = this;
-	_sDefaultWsPair = this;
-	_sDefaultWssPair = this;
 	return bret;
 }
 
-bool WebManagerPair::InitWsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool HttpsManagerPair::InitWsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
 	_wsIP = ip;
 	_wsPort = port;
 	_msgQueueP = msgqueue;
 	_logger = spdlog::get(LOGGER_NAME);
-	_recvWsThread = std::make_shared<std::thread>(&WebManagerPair::RecvWsDataThreadFunc, this);
+	_recvWsThread = std::make_shared<std::thread>(&HttpsManagerPair::RecvWsDataThreadFunc, this);
 	if (_logger)
 	{
 		bret = true;
 	}
-	_sDefaultHttpPair = this;
 	_sDefaultHttpsPair = this;
-	_sDefaultWsPair = this;
-	_sDefaultWssPair = this;
 	return bret;
 }
 
-bool WebManagerPair::InitWssManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool HttpsManagerPair::InitWssManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
 	_wssIP = ip;
 	_wssPort = port;
 	_msgQueueP = msgqueue;
 	_logger = spdlog::get(LOGGER_NAME);
-	_recvWssThread = std::make_shared<std::thread>(&WebManagerPair::RecvWssDataThreadFunc, this);
+	_recvWssThread = std::make_shared<std::thread>(&HttpsManagerPair::RecvWssDataThreadFunc, this);
 	if (_logger)
 	{
 		bret = true;
 	}
-	_sDefaultHttpPair = this;
 	_sDefaultHttpsPair = this;
-	_sDefaultWsPair = this;
-	_sDefaultWssPair = this;
 	return bret;
 }
 
-void WebManagerPair::StartWebManagerPair()
+void HttpsManagerPair::StartWebManagerPair()
 {
 	
 	if (_recvHttpThread && _recvHttpThread->joinable())
@@ -204,11 +157,11 @@ void WebManagerPair::StartWebManagerPair()
 	}
 }
 
-WebManagerPair::~WebManagerPair()
+HttpsManagerPair::~HttpsManagerPair()
 {
 }
 
-void WebManagerPair::RecvHttpDataThreadFunc()
+void HttpsManagerPair::RecvHttpDataThreadFunc()
 {
 	using WebSocketBehavior = typename uWS::TemplatedApp<false>::WebSocketBehavior;
 	using WebSocket = uWS::WebSocket<false, true>;
@@ -248,7 +201,7 @@ void WebManagerPair::RecvHttpDataThreadFunc()
 }
 
 
-void WebManagerPair::RecvHttpsDataThreadFunc()
+void HttpsManagerPair::RecvHttpsDataThreadFunc()
 {
 	using namespace uWS;
 	using WebSocketBehavior = typename uWS::TemplatedApp<false>::WebSocketBehavior;
@@ -290,7 +243,7 @@ void WebManagerPair::RecvHttpsDataThreadFunc()
 	app->run();
 }
 
-void WebManagerPair::RecvWsDataThreadFunc()
+void HttpsManagerPair::RecvWsDataThreadFunc()
 {
 	using WebSocketBehavior = typename uWS::TemplatedApp<false>::WebSocketBehavior;
 	using WebSocket = uWS::WebSocket<false, true>;
@@ -343,7 +296,7 @@ void WebManagerPair::RecvWsDataThreadFunc()
 		}).run();
 }
 
-void WebManagerPair::RecvWssDataThreadFunc()
+void HttpsManagerPair::RecvWssDataThreadFunc()
 {
 	using WebSocketBehavior = typename uWS::TemplatedApp<true>::WebSocketBehavior;
 	using WebSocket = uWS::WebSocket<true, true>;
@@ -404,7 +357,7 @@ void WebManagerPair::RecvWssDataThreadFunc()
 		}).run();
 }
 
-void WebManagerPair::SendClientResponse()
+void HttpsManagerPair::SendClientResponse()
 {
 	auto msgResp = _msgQueueP->GetWebMessageResp();
 	while (msgResp->sessionid != INVALID_SESSION_ID)

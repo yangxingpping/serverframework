@@ -36,9 +36,6 @@
     <ClCompile Include="NngRelateManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\src\WebManagerPair.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\src\CPUIntensiveThread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -61,6 +58,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\common\src\LogInit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\HttpManagerPair.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\HttpsManagerPair.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\SWebSocketManagerPair.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\WebSocketManagerPair.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -90,9 +99,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\common\include\WebBaseInterface.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common\include\WebManagerPair.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\common\include\MessageQueueManager.h">
@@ -144,6 +150,30 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\common\include\LogInit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\HttpManagerPair.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\HttpsManagerPair.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\PackUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\PBMessageCallBacks.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\PBMsgCallBackImpl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\query.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\SWebSocketManagerPair.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\include\WebSocketManagerPair.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

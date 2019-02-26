@@ -11,33 +11,26 @@
 #include <mutex>
 
 
-class WebManagerPair : public WebBaseInterface, public SessionManager<uWS::WebSocket<false,true>*>, SessionManager<uWS::WebSocket<true, true>*>,
+class HttpsManagerPair : public WebBaseInterface, public SessionManager<uWS::WebSocket<false,true>*>, SessionManager<uWS::WebSocket<true, true>*>,
 	SessionManager<uWS::HttpResponse<false>*>, SessionManager<uWS::HttpResponse<true>*>
 {
 public: //statck function
-	static WebManagerPair* defaultHttpPair();
-	static WebManagerPair* defaultWebSocketPair();
-	static WebManagerPair* _sDefaultHttpPair;
-	static WebManagerPair* _sDefaultHttpsPair;
-	static WebManagerPair* _sDefaultWsPair;
-	static WebManagerPair* _sDefaultWssPair;
+	static HttpsManagerPair* defaultHttpsPair();
+	static HttpsManagerPair* _sDefaultHttpsPair;
 public: //override functions
-	virtual void NotifyHttpResponse() override;
-	virtual void NotifyHttpsResponse() override;
-	virtual void NotifyWsResponse() override;
-	virtual void NotifyWssResponse() override;
+	virtual void NotifyClientResponse() override;
 	virtual void PushWebSocketClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
 	virtual void PushHttpClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
 	virtual void PushHttpsClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
 
 public:
-	WebManagerPair();
+	HttpsManagerPair();
 	bool InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	bool InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	bool InitWsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	bool InitWssManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	void StartWebManagerPair();
-	virtual ~WebManagerPair();
+	virtual ~HttpsManagerPair();
 	void RecvHttpDataThreadFunc();
 	void RecvHttpsDataThreadFunc();
 	void RecvWsDataThreadFunc();
