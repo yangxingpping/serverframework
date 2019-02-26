@@ -52,6 +52,7 @@ void CPUIntensiveThread::WaitJoin()
 void CPUIntensiveThread::CpuIntensiveProcThread()
 {
 	uv_loop_t loop;
+	_dbConnection->startDBManager();
 	uv_loop_init(&loop);
 	_asyncClientRequest = new uv_async_t();
 	_asyncClientRequest->data = this;
