@@ -197,8 +197,8 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
 		if (msg->pSource)
 		{
-			_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-			_webGateWay[0]->NotifyClientResponse();
+			msg->pSource->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+			msg->pSource->NotifyClientResponse();
 		}
 		else {}
 		bHasMsg = _recvJsonMessages->try_dequeue(msg);
@@ -211,8 +211,8 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 		WrapStatCostTimeVoid(CCALL(&CPUIntensiveThread::ProcJsonMessage), this, msg->sessionid, std::string_view{ msg->msg });
 		if (msg->pSource)
 		{
-			_webGateWay[0]->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
-			_webGateWay[0]->NotifyClientResponse();
+			msg->pSource->PushClientResponse(ResponseType::unicast, msg->sessionid, str.c_str(), str.length());
+			msg->pSource->NotifyClientResponse();
 		}
 		else{}
 		bHasMsg = _recvHttpJsonMessages->try_dequeue(msg);
