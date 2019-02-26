@@ -17,8 +17,6 @@ MessageQueueManager::MessageQueueManager()
 	_httpsSendQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>>>();
 	_swebRecvQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessage>>>();
 	_swebSendQueue = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionResponseMessage>>>();
-
-
 }
 
 

@@ -23,7 +23,7 @@ void CPUIntensiveThread::SClientRequestComeCallback(uv_async_t* handle)
 	}
 }
 
-CPUIntensiveThread::CPUIntensiveThread(WebBaseInterface* pgw, std::shared_ptr<ProcessMessageInterface> pimpl)
+CPUIntensiveThread::CPUIntensiveThread(std::shared_ptr<ProcessMessageInterface> pimpl)
 	:_procMessageImpl(pimpl)
 {
 	_dbConnection = std::make_shared<DBManager>();
@@ -35,19 +35,6 @@ CPUIntensiveThread::CPUIntensiveThread(WebBaseInterface* pgw, std::shared_ptr<Pr
 	_recvHttpsJsonMessages = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>>();
 	_recvHttpsPBMessages = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>>();
 	bool bFound = false;
-	assert(pgw);
-	for (auto p : _webGateWay)
-	{
-		if (p == pgw)
-		{
-			bFound = true;
-			break;
-		}
-	}
-	if (!bFound)
-	{
-		_webGateWay.push_back(pgw);
-	}
 }
 
 
