@@ -51,14 +51,7 @@ void WebSocketManagerPair::PushClientResponse(ResponseType type, SessionType sid
 	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
 }
 
-WebSocketManagerPair::WebSocketManagerPair()
-{
-	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
-	_wsDbManager = std::make_shared<DBManager>();
-	_wsDbManager->startDBManager();
-}
-
-bool WebSocketManagerPair::InitWsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool WebSocketManagerPair::InitWebManager(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
 	_wsIP = ip;
@@ -72,6 +65,13 @@ bool WebSocketManagerPair::InitWsManagerPair(std::string ip, uint16_t port, std:
 	}
 	_sDefaultWsPair = this;
 	return bret;
+}
+
+WebSocketManagerPair::WebSocketManagerPair()
+{
+	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
+	_wsDbManager = std::make_shared<DBManager>();
+	_wsDbManager->startDBManager();
 }
 
 void WebSocketManagerPair::StartWebManagerPair()

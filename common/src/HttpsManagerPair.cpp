@@ -45,14 +45,7 @@ void HttpsManagerPair::PushClientResponse(ResponseType type, SessionType sid, co
 	_msgQueueP->AddWebResponseMessage(sid, msg, len, type);
 }
 
-HttpsManagerPair::HttpsManagerPair()
-{
-	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
-	_wsDbManager = std::make_shared<DBManager>();
-	_wsDbManager->startDBManager();
-}
-
-bool HttpsManagerPair::InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool HttpsManagerPair::InitWebManager(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
 	_httpsIP = ip;
@@ -66,6 +59,13 @@ bool HttpsManagerPair::InitHttpsManagerPair(std::string ip, uint16_t port, std::
 	}
 	_sDefaultHttpsPair = this;
 	return bret;
+}
+
+HttpsManagerPair::HttpsManagerPair()
+{
+	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
+	_wsDbManager = std::make_shared<DBManager>();
+	_wsDbManager->startDBManager();
 }
 
 void HttpsManagerPair::StartWebManagerPair()

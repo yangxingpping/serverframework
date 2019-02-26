@@ -48,17 +48,10 @@ void HttpManagerPair::PushClientResponse(ResponseType type, SessionType sid, con
 }
 
 
-HttpManagerPair::HttpManagerPair()
-{
-	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
-	_wsDbManager = std::make_shared<DBManager>();
-	_wsDbManager->startDBManager();
-}
-
-bool HttpManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
+bool HttpManagerPair::InitWebManager(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)
 {
 	bool bret = false;
-	
+
 	_httpIP = ip;
 	_httpPort = port;
 	_msgQueueP = msgqueue;
@@ -72,24 +65,20 @@ bool HttpManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::sh
 	return bret;
 }
 
+HttpManagerPair::HttpManagerPair()
+{
+	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
+	_wsDbManager = std::make_shared<DBManager>();
+	_wsDbManager->startDBManager();
+}
+
+
 void HttpManagerPair::StartWebManagerPair()
 {
 	
 	if (_recvHttpThread && _recvHttpThread->joinable())
 	{
 		_recvHttpThread->join();
-	}
-	if (_recvHttpsThread && _recvHttpsThread->joinable())
-	{
-		_recvHttpsThread->join();
-	}
-	if (_recvWsThread && _recvWsThread->joinable())
-	{
-		_recvWsThread->join();
-	}
-	if (_recvWssThread && _recvWssThread->joinable())
-	{
-		_recvWssThread->join();
 	}
 }
 

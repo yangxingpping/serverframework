@@ -15,7 +15,7 @@ void custom_main()
 	NngRelateManager nngmanager;
 	procmanager->InitProcManager(&wmanager, 4);
 	msgqueue->InitMessageQueueManager(procmanager);
-	wmanager.InitWsManagerPair("127.0.0.1", 1000, msgqueue);
+	wmanager.InitWebManager("127.0.0.1", 1000, msgqueue);
 	nngmanager.startNngRelateManager();
 	char ch;
 	std::cin >> ch;

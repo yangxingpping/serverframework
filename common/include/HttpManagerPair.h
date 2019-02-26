@@ -19,10 +19,9 @@ public: //statck function
 public: //override functions
 	virtual void NotifyClientResponse() override;
 	virtual void PushClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
-
+	virtual bool InitWebManager(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue) override;
 public:
 	HttpManagerPair();
-	bool InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	void StartWebManagerPair();
 	virtual ~HttpManagerPair();
 	void RecvHttpDataThreadFunc();
@@ -45,14 +44,8 @@ private:
 	uint16_t	_wssPort = 0;
 	std::shared_ptr<spdlog::logger> _logger;
 	std::shared_ptr<std::thread> _recvHttpThread;
-	std::shared_ptr<std::thread> _recvHttpsThread;
-	std::shared_ptr<std::thread> _recvWsThread;
-	std::shared_ptr<std::thread> _recvWssThread;
 
 	uWS::Loop* _httpLoop = nullptr;
-	uWS::Loop* _httpsLoop = nullptr;
-	uWS::Loop* _wsLoop = nullptr;
-	uWS::Loop* _wssLoop = nullptr;
 
 	std::shared_ptr<MessageQueueManager> _msgQueueP;
 	uWS::Loop* _curLoop = nullptr;

@@ -19,10 +19,9 @@ public: //statck function
 public: //override functions
 	virtual void NotifyClientResponse() override;
 	virtual void PushClientResponse(ResponseType type, SessionType sid, const char* msg, size_t len) override;
-
+	virtual bool InitWebManager(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue) override;
 public:
 	HttpsManagerPair();
-	bool InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	void StartWebManagerPair();
 	virtual ~HttpsManagerPair();
 	void RecvHttpsDataThreadFunc();
