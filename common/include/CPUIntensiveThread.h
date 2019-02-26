@@ -19,7 +19,7 @@ class CPUIntensiveThread
 public:
 	static void SClientRequestComeCallback(uv_async_t* handle);
 public:
-	CPUIntensiveThread(WebBaseInterface* pgw, std::shared_ptr<ProcessMessageInterface> pimpl);
+	CPUIntensiveThread(std::shared_ptr<ProcessMessageInterface> pimpl);
 	~CPUIntensiveThread();
 	void WaitJoin();
 	void CpuIntensiveProcThread();	
@@ -49,7 +49,6 @@ private:
 
 	std::shared_ptr<ProcessMessageInterface> _procMessageImpl;
 
-	std::vector<WebBaseInterface*> _webGateWay;
 	uv_async_t* _asyncClientRequest;
 	bool _run = false;
 	std::shared_ptr<DBManager> _dbConnection;

@@ -16,12 +16,12 @@ ProcManager::~ProcManager()
 {
 }
 
-void ProcManager::InitProcManager(WebBaseInterface* pGateWay, unsigned int cpuTCount /*= 4*/)
+void ProcManager::InitProcManager(unsigned int cpuTCount /*= 4*/)
 {
 	//_webGateWayInterface = pGateWay;
 	for (unsigned int i = 0; i < cpuTCount; ++i)
 	{
-		_cpuThreads.push_back(std::make_shared<CPUIntensiveThread>(pGateWay, std::make_shared<ProcessMessageImpl>()));
+		_cpuThreads.push_back(std::make_shared<CPUIntensiveThread>(std::make_shared<ProcessMessageImpl>()));
 	}
 	_threadMaxSize = static_cast<unsigned int>(_cpuThreads.size());
 	_ioThread = std::make_shared<std::thread>(&ProcManager::IOIntensiveProcThread, this);
@@ -58,14 +58,22 @@ void ProcManager::DispatchClientMessage(std::shared_ptr<SessionRequestMessage> m
 		break;
 	case PackSourceRouteType::http:
 	{
+		body->duplex = DuplexType::simple_half_duplex;
 		_cpuThreads[_tempIndex]->PushHttpRequestMessage(body, packType);
 	}break;
 	case PackSourceRouteType::https:
 	{
+		body->duplex = DuplexType::simple_half_duplex;
 		_cpuThreads[_tempIndex]->PushHttpsRequestMessage(body, packType);
 	}break;
 	case PackSourceRouteType::websocket:
 	{
+		body->duplex = DuplexType::dux_duplex;
+		_cpuThreads[_tempIndex]->PushWebSocketRequestMessage(body, packType);
+	}break;
+	case PackSourceRouteType::securewebsocket:
+	{
+		body->duplex = DuplexType::dux_duplex;
 		_cpuThreads[_tempIndex]->PushWebSocketRequestMessage(body, packType);
 	}break;
 	case PackSourceRouteType::tcpsocket:

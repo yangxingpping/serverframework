@@ -24,7 +24,14 @@ enum class PackSourceRouteType
 	http,
 	https,
 	websocket,
+	securewebsocket,
 	tcpsocket,
+};
+
+enum class DuplexType
+{
+	simple_half_duplex, //half duplex, like http, https
+	dux_duplex,			//dux duplex, like tcp, websocket, wss
 };
 
 class SessionMessage
@@ -52,6 +59,7 @@ public:
 	SessionType sessionid;
 	std::string msg;
 	WebBaseInterface* pSource = nullptr;
+	DuplexType duplex = DuplexType::simple_half_duplex;
 };
 
 enum class ResponseType
