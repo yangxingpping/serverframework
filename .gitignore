@@ -69,6 +69,7 @@ dbManager/dbManager
 logicServer/logicServer
 
 /*/x64/
+/*/debug/
 
 */*.ilk
 */*.pdb
