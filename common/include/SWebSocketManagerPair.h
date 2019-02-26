@@ -11,8 +11,7 @@
 #include <mutex>
 
 
-class SWebSocketManagerPair : public WebBaseInterface, public SessionManager<uWS::WebSocket<false,true>*>, SessionManager<uWS::WebSocket<true, true>*>,
-	SessionManager<uWS::HttpResponse<false>*>, SessionManager<uWS::HttpResponse<true>*>
+class SWebSocketManagerPair : public WebBaseInterface,  SessionManager<uWS::WebSocket<true, true>*>
 {
 public: //statck function
 	static SWebSocketManagerPair* defaultSWebSocketPair();
@@ -25,15 +24,9 @@ public: //override functions
 
 public:
 	SWebSocketManagerPair();
-	bool InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
-	bool InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
-	bool InitWsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	bool InitWssManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	void StartWebManagerPair();
 	virtual ~SWebSocketManagerPair();
-	void RecvHttpDataThreadFunc();
-	void RecvHttpsDataThreadFunc();
-	void RecvWsDataThreadFunc();
 	void RecvWssDataThreadFunc();
 
 	
@@ -53,9 +46,6 @@ private:
 	std::string _wssIP = "";
 	uint16_t	_wssPort = 0;
 	std::shared_ptr<spdlog::logger> _logger;
-	std::shared_ptr<std::thread> _recvHttpThread;
-	std::shared_ptr<std::thread> _recvHttpsThread;
-	std::shared_ptr<std::thread> _recvWsThread;
 	std::shared_ptr<std::thread> _recvWssThread;
 
 	uWS::Loop* _httpLoop = nullptr;

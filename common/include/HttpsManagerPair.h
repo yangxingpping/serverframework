@@ -11,8 +11,7 @@
 #include <mutex>
 
 
-class HttpsManagerPair : public WebBaseInterface, public SessionManager<uWS::WebSocket<false,true>*>, SessionManager<uWS::WebSocket<true, true>*>,
-	SessionManager<uWS::HttpResponse<false>*>, SessionManager<uWS::HttpResponse<true>*>
+class HttpsManagerPair : public WebBaseInterface, SessionManager<uWS::HttpResponse<true>*>
 {
 public: //statck function
 	static HttpsManagerPair* defaultHttpsPair();
@@ -25,16 +24,10 @@ public: //override functions
 
 public:
 	HttpsManagerPair();
-	bool InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	bool InitHttpsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
-	bool InitWsManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
-	bool InitWssManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue);
 	void StartWebManagerPair();
 	virtual ~HttpsManagerPair();
-	void RecvHttpDataThreadFunc();
 	void RecvHttpsDataThreadFunc();
-	void RecvWsDataThreadFunc();
-	void RecvWssDataThreadFunc();
 
 	
 
