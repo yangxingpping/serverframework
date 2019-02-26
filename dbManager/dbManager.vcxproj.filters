@@ -27,9 +27,6 @@
     <ClCompile Include="..\common\src\SessionManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\include\WebManagerPair.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\src\MessageQueueManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -37,6 +34,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="NngRelateManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\src\WebManagerPair.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

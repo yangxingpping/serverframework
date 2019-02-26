@@ -72,7 +72,7 @@ private:
 
 	std::shared_ptr<MessageQueueManager> _msgQueueP;
 	uWS::Loop* _curLoop = nullptr;
-
 	std::shared_ptr<std::recursive_mutex> _threadSafeMutex;
+	std::shared_ptr<DBManager> _wsDbManager = nullptr;
 };
 

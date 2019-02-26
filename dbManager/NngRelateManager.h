@@ -25,5 +25,6 @@ private:
 	std::string _pubAddress = "tcp://127.0.0.1:100";
 	std::shared_ptr<std::thread> _pullThread = nullptr;
 	std::string _pullAddress = "tcp://127.0.0.1:101";
+	std::shared_ptr<DBManager> _dbManager = nullptr;
 };
 

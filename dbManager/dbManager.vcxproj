@@ -147,12 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\include\WebManagerPair.cpp" />
     <ClCompile Include="..\common\src\DBManager.cpp" />
     <ClCompile Include="..\common\src\DumpManager.cpp" />
     <ClCompile Include="..\common\src\MessageQueueManager.cpp" />
     <ClCompile Include="..\common\src\SessionManager.cpp" />
     <ClCompile Include="..\common\src\Utils.cpp" />
+    <ClCompile Include="..\common\src\WebManagerPair.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NngRelateManager.cpp" />
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include "WebManagerPair.h"
 #include "WebBaseInterface.h"
 #include "MessageQueueManager.h"
+#include "DBManager.h"
 
 #include "comm_def.h"
 
@@ -101,6 +102,7 @@ void WebManagerPair::PushHttpsClientResponse(ResponseType type, SessionType sid,
 WebManagerPair::WebManagerPair()
 {
 	_threadSafeMutex = std::make_shared<std::recursive_mutex>();
+	_wsDbManager = std::make_shared<DBManager>();
 }
 
 bool WebManagerPair::InitHttpManagerPair(std::string ip, uint16_t port, std::shared_ptr<MessageQueueManager> msgqueue)

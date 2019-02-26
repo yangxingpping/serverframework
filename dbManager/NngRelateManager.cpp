@@ -1,4 +1,5 @@
 #include "NngRelateManager.h"
+#include "DBManager.h"
 
 #include "concurrentqueue.h"
 #include "nng/nng.h"
@@ -15,6 +16,7 @@ NngRelateManager::NngRelateManager(std::string pubaddr /*= "tcp://127.0.0.1:100"
 
 bool NngRelateManager::startNngRelateManager()
 {
+	_dbManager = std::make_shared<DBManager>();
 	_pubThread = std::make_shared<std::thread>(&NngRelateManager::pubThreadFunc, this);
 	_pullThread = std::make_shared<std::thread>(&NngRelateManager::pullThreadFunc, this);
 	return true;
