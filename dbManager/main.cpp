@@ -13,7 +13,7 @@ void custom_main()
 	std::shared_ptr<ProcManagerInterface> procmanager = std::make_shared<ProcManager>();
 	WebSocketManagerPair wmanager;
 	NngRelateManager nngmanager;
-	procmanager->InitProcManager(&wmanager, 4);
+	procmanager->InitProcManager(4);
 	msgqueue->InitMessageQueueManager(procmanager);
 	wmanager.InitWebManager("127.0.0.1", 1000, msgqueue);
 	nngmanager.startNngRelateManager();
