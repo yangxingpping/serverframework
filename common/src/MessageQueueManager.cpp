@@ -5,7 +5,8 @@
 #include "uv.h"
 #include "SessionManager.h"
 
-#include "cppcodec/base64_rfc4648.hpp"
+#include "Utils.h"
+
 
 MessageQueueManager::MessageQueueManager()
 {
@@ -67,11 +68,8 @@ void MessageQueueManager::AddsWebResponseMessage(SessionType sessionid, const ch
 
 void MessageQueueManager::AddHttpRequestMessage(SessionType sessionid, const char* msg, size_t len, WebBaseInterface* pfront)
 {
-	using base64 = cppcodec::base64_rfc4648;
-	std::vector<uint8_t> strmsg = base64::decode(std::string{ msg, len });
-	std::string strc{ strmsg.begin(), strmsg.end() };
-	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid, 
-		{strmsg.begin(),strmsg.end()}, PackSourceHostType::client, pfront });
+	auto msg2 = std::shared_ptr<SessionRequestMessage>(new SessionRequestMessage{ sessionid,
+		{msg, len}, PackSourceHostType::client, pfront });
 	_httpRecvQueue->enqueue(msg2);
 	if (_run)
 	{

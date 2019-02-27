@@ -10,6 +10,7 @@
 #include "DBManager.h"
 
 #include "comm_def.h"
+#include "Utils.h"
 
 
 #include <functional>
@@ -116,7 +117,15 @@ void HttpManagerPair::RecvHttpDataThreadFunc()
 					return;
 				}
 				auto sessionid = static_cast<SessionManager<uWS::HttpResponse<false>*>*>(this)->AddSession(resp);
-				_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
+				auto str = Utils::DecodeBase64(query.data() + 1, query.length() - 1);
+				if (!str.empty())
+				{
+					_msgQueueP->AddHttpRequestMessage(sessionid, str.data(), str.length(), this);
+				}
+				else
+				{
+					_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
+				}
 			}
 		});
 	app.post("/*", [this](HttpResponse* resp, HttpRequest* req)
