@@ -116,15 +116,16 @@ void HttpManagerPair::RecvHttpDataThreadFunc()
 					resp->end("invalid parameters");
 					return;
 				}
-				auto sessionid = static_cast<SessionManager<uWS::HttpResponse<false>*>*>(this)->AddSession(resp);
 				auto str = Utils::DecodeBase64(query.data() + 1, query.length() - 1);
 				if (!str.empty())
 				{
+					auto sessionid = static_cast<SessionManager<uWS::HttpResponse<false>*>*>(this)->AddSession(resp);
 					_msgQueueP->AddHttpRequestMessage(sessionid, str.data(), str.length(), this);
 				}
 				else
 				{
-					_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
+					resp->end("invalid parameters");
+					//_msgQueueP->AddHttpRequestMessage(sessionid, query.data() + 1, query.length() - 1, this);
 				}
 			}
 		});
