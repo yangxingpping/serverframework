@@ -34,9 +34,9 @@ public:
 
 	void PushHttpsRequestMessage(std::shared_ptr<SessionRequestMessageBody> msg, EPackType type);
 
-	void MemClientRequestComeCallback();
+	virtual bool MemClientRequestComeCallback();
 
-private:
+public:
 	std::shared_ptr<std::thread> _cpuThreads;
 	std::shared_ptr<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>> _recvJsonMessages;
 	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>> _recvPBMessages;
@@ -47,6 +47,7 @@ private:
 	std::shared_ptr<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>> _recvHttpsJsonMessages;
 	std::shared_ptr < moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>> _recvHttpsPBMessages;
 
+private:
 	std::shared_ptr<ProcessMessageInterface> _procMessageImpl;
 
 	uv_async_t* _asyncClientRequest;

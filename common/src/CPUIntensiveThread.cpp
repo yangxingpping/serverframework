@@ -24,8 +24,9 @@ void CPUIntensiveThread::SClientRequestComeCallback(uv_async_t* handle)
 }
 
 CPUIntensiveThread::CPUIntensiveThread(std::shared_ptr<ProcessMessageInterface> pimpl)
-	:_procMessageImpl(pimpl)
+	
 {
+	_procMessageImpl = pimpl;
 	_dbConnection = std::make_shared<DBManager>();
 	_cpuThreads = std::make_shared<std::thread>(&CPUIntensiveThread::CpuIntensiveProcThread, this);
 	_recvJsonMessages = std::make_shared<moodycamel::ConcurrentQueue<std::shared_ptr<SessionRequestMessageBody>, moodycamel::ConcurrentQueueDefaultTraits>>();
@@ -168,7 +169,7 @@ void CPUIntensiveThread::PushHttpsRequestMessage(std::shared_ptr<SessionRequestM
 	}
 }
 
-void CPUIntensiveThread::MemClientRequestComeCallback()
+bool CPUIntensiveThread::MemClientRequestComeCallback()
 {
 	static_assert(std::is_integral<MainCmdType>::value, "main command must be integral");
 	static_assert(std::is_integral<AssCMDType>::value, "assist command must be integral");
@@ -236,4 +237,6 @@ void CPUIntensiveThread::MemClientRequestComeCallback()
 		{ }
 		bHasMsg = _recvPBMessages->try_dequeue(msg);
 	}
+
+	return true;
 }

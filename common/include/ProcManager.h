@@ -17,9 +17,9 @@ public:
 	ProcManager();
 	virtual ~ProcManager();
 	virtual void InitProcManager(unsigned int cpuTCount = 4) override;
+	virtual void AddBackendUnit(CPUIntensiveThread* backendUnit) override;
 
 	void StartProcManager();
-	
 	
 	void IOIntensiveProcThread();	//
 	virtual void DispatchClientMessage(std::shared_ptr<SessionRequestMessage> msg, PackSourceRouteType type = PackSourceRouteType::invalid_) override;
@@ -27,10 +27,9 @@ public:
 	void DispatchIoIntensiveMessage(std::shared_ptr<SessionRequestMessage> msg);
 
 private:
-	std::vector<std::shared_ptr<CPUIntensiveThread>> _cpuThreads;
+	std::vector<CPUIntensiveThread*> _cpuThreads;
 	std::shared_ptr<std::thread> _ioThread;
 	unsigned int	_threadSelectIndex = 0;
-	unsigned int	_threadMaxSize = 0;
-	//WebBaseInterface* _webGateWayInterface = nullptr;
+	size_t	_threadMaxSize = 0;
 };
 

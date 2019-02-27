@@ -175,6 +175,7 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </DisableSpecificWarnings>
     </ClCompile>
+    <ClCompile Include="AuthProcThread.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +211,7 @@
     <ClInclude Include="..\common\include\WebSocketManagerPair.h" />
     <ClInclude Include="..\common\include\winmain-inl.h" />
     <ClInclude Include="..\common\include\WrapperCaller.h" />
+    <ClInclude Include="AuthProcThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

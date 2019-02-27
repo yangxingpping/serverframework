@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <functional>
 
 ProcManager::ProcManager()
 {
@@ -14,17 +15,26 @@ ProcManager::ProcManager()
 
 ProcManager::~ProcManager()
 {
+	for (auto p : _cpuThreads)
+	{
+		p->WaitJoin();
+	}
+	for (auto p : _cpuThreads)
+	{
+		delete p;
+	}
+	_cpuThreads.clear();
 }
 
 void ProcManager::InitProcManager(unsigned int cpuTCount /*= 4*/)
 {
 	//_webGateWayInterface = pGateWay;
-	for (unsigned int i = 0; i < cpuTCount; ++i)
+	/*for (unsigned int i = 0; i < cpuTCount; ++i)
 	{
 		_cpuThreads.push_back(std::make_shared<CPUIntensiveThread>(std::make_shared<ProcessMessageImpl>()));
 	}
 	_threadMaxSize = static_cast<unsigned int>(_cpuThreads.size());
-	_ioThread = std::make_shared<std::thread>(&ProcManager::IOIntensiveProcThread, this);
+	_ioThread = std::make_shared<std::thread>(&ProcManager::IOIntensiveProcThread, this);*/
 }
 
 void ProcManager::StartProcManager()
@@ -34,6 +44,12 @@ void ProcManager::StartProcManager()
 		onecpu->WaitJoin();
 	}
 	_ioThread->join();
+}
+
+void ProcManager::AddBackendUnit(CPUIntensiveThread* backendUnit)
+{
+	_cpuThreads.push_back(backendUnit);
+	_threadMaxSize = _cpuThreads.size();
 }
 
 void ProcManager::IOIntensiveProcThread()
