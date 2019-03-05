@@ -98,16 +98,57 @@ static inline void bsd_shutdown_socket(LIBUS_SOCKET_DESCRIPTOR fd) {
 #endif
 }
 
+struct bsd_addr_t {
+    struct sockaddr_storage mem;
+    socklen_t len;
+    char *ip;
+    int ip_length;
+};
+
+static inline void internal_finalize_bsd_addr(struct bsd_addr_t *addr) {
+    // parse, so to speak, the address
+    if (addr->mem.ss_family == AF_INET6) {
+        addr->ip = (char *) &((struct sockaddr_in6 *) addr)->sin6_addr;
+        addr->ip_length = sizeof(struct in6_addr);
+    } else if (addr->mem.ss_family == AF_INET) {
+        addr->ip = (char *) &((struct sockaddr_in *) addr)->sin_addr;
+        addr->ip_length = sizeof(struct in_addr);
+    } else {
+        addr->ip_length = 0;
+    }
+}
+
+static inline int bsd_socket_addr(LIBUS_SOCKET_DESCRIPTOR fd, struct bsd_addr_t *addr) {
+    addr->len = sizeof(addr->mem);
+    if (getpeername(fd, (struct sockaddr *) &addr->mem, &addr->len)) {
+        return -1;
+    }
+    internal_finalize_bsd_addr(addr);
+    return 0;
+}
+
+static inline char *bsd_addr_get_ip(struct bsd_addr_t *addr) {
+    return addr->ip;
+}
+
+static inline int bsd_addr_get_ip_length(struct bsd_addr_t *addr) {
+    return addr->ip_length;
+}
+
 // called by dispatch_ready_poll
-static inline LIBUS_SOCKET_DESCRIPTOR bsd_accept_socket(LIBUS_SOCKET_DESCRIPTOR fd) {
+static inline LIBUS_SOCKET_DESCRIPTOR bsd_accept_socket(LIBUS_SOCKET_DESCRIPTOR fd, struct bsd_addr_t *addr) {
     LIBUS_SOCKET_DESCRIPTOR accepted_fd;
+    addr->len = sizeof(addr->mem);
+
 #if defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
     // Linux, FreeBSD
-    accepted_fd = accept4(fd, 0, 0, SOCK_CLOEXEC | SOCK_NONBLOCK);
+    accepted_fd = accept4(fd, (struct sockaddr *) addr, &addr->len, SOCK_CLOEXEC | SOCK_NONBLOCK);
 #else
     // Windows, OS X
-    accepted_fd = accept(fd, 0, 0);
+    accepted_fd = accept(fd, (struct sockaddr *) addr, &addr->len);
 #endif
+
+    internal_finalize_bsd_addr(addr);
 
     return apple_no_sigpipe(accepted_fd);
 }

@@ -96,10 +96,10 @@ void HttpManagerPair::RecvHttpDataThreadFunc()
 	using HttpResponse = uWS::HttpResponse<false>;
 
 	{
-		std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
-		_httpLoop = uWS::Loop::defaultLoop();
+		//std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
+		//_httpLoop = uWS::Loop::defaultLoop();
 	}
-	
+	_httpLoop = uWS::Loop::get();
 	uWS::App app;
 	app.get("/*", [this](HttpResponse* resp, HttpRequest* req)
 		{

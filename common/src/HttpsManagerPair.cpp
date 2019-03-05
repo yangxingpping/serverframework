@@ -90,15 +90,17 @@ void HttpsManagerPair::RecvHttpsDataThreadFunc()
 	using HttpResponse = uWS::HttpResponse<true>;
 
 	{
-		std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
-		_httpsLoop = uWS::Loop::defaultLoop();
+		//std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
+		//_httpsLoop = uWS::Loop::defaultLoop();
 	}
+
 	struct us_new_socket_context_options_t ssl_options {"server.key", "server.pem", "123456789",nullptr};
 	uWS::SSLApp* app = nullptr;
 	{
 		std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
 		app = new uWS::SSLApp(ssl_options);
 	}
+	_httpsLoop = uWS::Loop::get();
 	app->get("/*", [this](HttpResponse* resp, HttpRequest* req)
 		{
 			auto url = req->getUrl();

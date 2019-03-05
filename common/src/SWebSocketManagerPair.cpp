@@ -94,10 +94,10 @@ void SWebSocketManagerPair::RecvWssDataThreadFunc()
 	using HttpResponse = uWS::HttpResponse<false>;
 
 	{
-		std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
-		_wssLoop = uWS::Loop::defaultLoop();
+		//std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
+		//_wssLoop = uWS::Loop::defaultLoop();
 	}
-
+	_wssLoop = uWS::Loop::get();
 	auto funcOpen = [this](WebSocket* ws, HttpRequest* req)
 	{
 		static_cast<SessionManager<uWS::WebSocket<true, true>*>*>(this)->AddSession(ws);

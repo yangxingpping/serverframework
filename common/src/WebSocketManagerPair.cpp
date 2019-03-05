@@ -130,9 +130,10 @@ void WebSocketManagerPair::RecvWsDataThreadFunc()
 	behavior.pong = funcPongs;
 	behavior.close = funcCloses;
 	{
-		std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
-		_wsLoop = uWS::Loop::defaultLoop();
+		//std::lock_guard<std::recursive_mutex> lock(*_threadSafeMutex);
+		//_wsLoop = uWS::Loop::defaultLoop();
 	}
+	_wsLoop = uWS::Loop::get();
 	uWS::App app;
 	app.ws<WebSocketDataPerson>("/*", std::move(behavior));
 	app.listen(_wsPort, [](auto* token) {
