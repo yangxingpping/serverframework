@@ -7,7 +7,7 @@
 
 #include <assert.h>
 
-#include "concurrentqueue.h"
+#include "concurrentqueue/concurrentqueue.h"
 
 AuthProcThread::AuthProcThread(std::shared_ptr<ProcessMessageInterface> pimpl):CPUIntensiveThread(pimpl)
 {

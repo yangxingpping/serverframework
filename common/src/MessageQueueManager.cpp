@@ -1,5 +1,5 @@
 
-#include "concurrentqueue.h"
+#include "concurrentqueue/concurrentqueue.h"
 
 #include "MessageQueueManager.h"
 #include "uv.h"

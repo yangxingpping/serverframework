@@ -4,7 +4,7 @@
 
 #include "cpp_redis/cpp_redis"
 #include "otlv4_h2/otlv4.h"
-#include "concurrentqueue.h"
+#include "concurrentqueue/concurrentqueue.h"
 
 #include <string>
 

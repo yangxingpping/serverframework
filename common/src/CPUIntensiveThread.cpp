@@ -1,7 +1,7 @@
 
 #include "uv.h"
 
-#include "concurrentqueue.h"
+#include "concurrentqueue/concurrentqueue.h"
 #include "comm_def.h"
 #include "CPUIntensiveThread.h"
 #include "WebBaseInterface.h"
