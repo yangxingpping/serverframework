@@ -60,6 +60,7 @@ ccserver/query.pb.h
 /CMakeFiles/
 /authServer/CMakeFiles/
 authServer/authServer
+/authServer/build/
 /build/
 /connector/CMakeFiles/
 connector/connector
