@@ -66,6 +66,8 @@ authServer/authServer
 connector/connector
 /dbManager/CMakeFiles/
 dbManager/dbManager
+/dbManager/build/
+
 /logicServer/CMakeFiles/
 logicServer/logicServer
 

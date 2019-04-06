@@ -1,7 +1,9 @@
+
+#include <string.h>
 #include "NngRelateManager.h"
 #include "DBManager.h"
 
-#include "concurrentqueue.h"
+#include "concurrentqueue/concurrentqueue.h"
 #include "nng/nng.h"
 #include "nng/protocol/pubsub0/pub.h"
 #include "nng/protocol/pipeline0/pull.h"
