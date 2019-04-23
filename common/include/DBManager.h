@@ -11,7 +11,7 @@
 class DBManager
 {
 public:
-	DBManager(RedisConfig redisconf = { "127.0.0.1", 6379 }, SqlDBConfig sqlconf = { "root", "123456", "_odbcmysql" });
+	DBManager(RedisConfig redisconf = { "192.168.5.138", 6379 }, SqlDBConfig sqlconf = { "root", "123456", "test" });
 	virtual ~DBManager();
 	void startDBManager();
 	void procPullThread();
