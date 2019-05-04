@@ -18,6 +18,7 @@ public:
 
 	void pubThreadFunc();
 	void pullThreadFunc();
+	void respThreadFunc();
 
 private:
 	std::shared_ptr<moodycamel::ConcurrentQueue<std::shared_ptr<std::string>, moodycamel::ConcurrentQueueDefaultTraits>> _pubQueue;
@@ -25,6 +26,8 @@ private:
 	std::string _pubAddress = "tcp://127.0.0.1:100";
 	std::shared_ptr<std::thread> _pullThread = nullptr;
 	std::string _pullAddress = "tcp://127.0.0.1:101";
+	std::shared_ptr < std::thread> _respThread = nullptr;
+	std::string _respAddr = "tcp://127.0.0.1:102";
 	std::shared_ptr<DBManager> _dbManager = nullptr;
 };
 

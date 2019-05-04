@@ -21,6 +21,7 @@ bool NngRelateManager::startNngRelateManager()
 	_dbManager = std::make_shared<DBManager>();
 	_pubThread = std::make_shared<std::thread>(&NngRelateManager::pubThreadFunc, this);
 	_pullThread = std::make_shared<std::thread>(&NngRelateManager::pullThreadFunc, this);
+	_respThread = std::make_shared<std::thread>(&NngRelateManager::respThreadFunc, this);
 	return true;
 }
 
@@ -70,5 +71,21 @@ void NngRelateManager::pullThreadFunc()
 		memset(&msgbuf[0], 0, sizeof(msgbuf[0]));
 		real_size = 0;
 		nn_result = nng_recv(_pullsocket, &msgbuf[0], &real_size, 0);
+	}
+}
+
+void NngRelateManager::respThreadFunc()
+{
+	nng_socket _respsocket;
+	char msgbuf[10 * 1024]; //max nng message size is 10*1024
+	size_t real_size = 0;
+	int nn_result = 0;
+	nn_result = nng_pull_open(&_respsocket);
+	nn_result = nng_listen(_respsocket, _respAddr.c_str(), NULL, 0);
+	while (true)
+	{
+		memset(&msgbuf[0], 0, sizeof(msgbuf[0]));
+		real_size = 0;
+		nn_result = nng_recv(_respsocket, &msgbuf[0], &real_size, 0);
 	}
 }
