@@ -36,7 +36,7 @@ std::shared_ptr<spdlog::logger> Utils::SGetLogger()
 
 MD564Type Utils::SCalculHash(const std::string str, MD564Type seed/*=0*/)
 {
-	return XXH64(str.c_str(), str.length(), seed);
+	return 0;// XXH64(str.c_str(), str.length(), seed);
 }
 
 std::string Utils::DecodeBase64(const char* pmsg, size_t len)
